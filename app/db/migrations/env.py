@@ -11,7 +11,8 @@ from alembic import context
 
 
 from core.config import get_settings
-from db import Base
+# from db import Base
+from models.models_bd import Base
 
 
 
