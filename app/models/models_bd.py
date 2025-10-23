@@ -22,8 +22,8 @@ class TargetMuscleCategory(Base):
 class User(Base):
     __tablename__ = 'User'
     
-    id_user: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    id_telegram: Mapped[int] = mapped_column(BigInteger)
+    # id_user: Mapped[int] = mapped_column(BigInteger, primary_key=True)
+    id_telegram: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     name_user: Mapped[str] = mapped_column(String(255))
     date_registration_user: Mapped[datetime] = mapped_column(DateTime(timezone=False), default=datetime.now) #если не передавать значение, устанавливается текущее время
     info_restrictions_user: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
@@ -32,28 +32,32 @@ class User(Base):
     # Relationships
     programs_workout: Mapped[list['ProgramsWorkout']] = relationship(back_populates='user')
     restrictions: Mapped[list['Restrictions']] = relationship(back_populates='user')
+    train_info: Mapped[list['TrainInfo']] = relationship(back_populates='user')
+
 
 class WorkoutExercises(Base):
     __tablename__ = 'Workout_exercises'
     
     id_workout_exercises: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     name_workout_exercises: Mapped[str] = mapped_column(String(255))
-    id_creation_user: Mapped[str] = mapped_column(String(255))
+    id_creation_user: Mapped[int] = mapped_column(BigInteger)
     notice_workout_exercises: Mapped[Optional[str]] = mapped_column(String(255), nullable=True)
     id_muscle_category: Mapped[int] = mapped_column(SmallInteger, ForeignKey('Target_muscle_category.id_muscle_category'))
     gif_file_workout_exercises: Mapped[Optional[bytes]] = mapped_column(LargeBinary, nullable=True)
+    vision_user: Mapped[bool] = mapped_column(Boolean)
     
     # Relationships
     muscle_category: Mapped['TargetMuscleCategory'] = relationship(back_populates='workout_exercises')
     workout_ex_pool: Mapped[list['WorkoutExPool']] = relationship(back_populates='workout_exercise')
     restrictions: Mapped[list['Restrictions']] = relationship(back_populates='workout_exercise')
+    train_pools: Mapped[list['TrainPool']] = relationship(back_populates='workout_exercise')
 
 class ProgramsWorkout(Base):
     __tablename__ = 'Programs_workout'
     
     id_programs_workout: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     name_programs_workout: Mapped[str] = mapped_column(String(255))
-    id_user: Mapped[int] = mapped_column(BigInteger, ForeignKey('User.id_user'))
+    id_user: Mapped[int] = mapped_column(BigInteger, ForeignKey('User.id_telegram'))
     week_day_programs_workout: Mapped[str] = mapped_column(String(255))
     
     # Relationships
@@ -74,17 +78,19 @@ class WorkoutExPool(Base):
     # Relationships
     program: Mapped['ProgramsWorkout'] = relationship(back_populates='workout_ex_pool')
     workout_exercise: Mapped['WorkoutExercises'] = relationship(back_populates='workout_ex_pool')
-    train_pools: Mapped[list['TrainPool']] = relationship(back_populates='exercise_pool')
 
 class TrainInfo(Base):
     __tablename__ = 'Train_info'
     
     id_train_info: Mapped[int] = mapped_column(BigInteger, primary_key=True)
-    datetime_start_train_info: Mapped[datetime] = mapped_column(DateTime(timezone=False))
+    datetime_start_train_info: Mapped[datetime] = mapped_column(DateTime(timezone=False), default=datetime.now)
     datetime_end_train_info: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=False), nullable=True)
     check_train_info: Mapped[bool] = mapped_column(Boolean)
+    Id_user: Mapped[int] = mapped_column(BigInteger, ForeignKey('User.id_telegram'))
+    name_programs_workout: Mapped[str] = mapped_column(String(255))
     
     # Relationships
+    user: Mapped['User'] = relationship(back_populates='train_info')
     train_pools: Mapped[list['TrainPool']] = relationship(back_populates='train_info')
 
 class TrainPool(Base):
@@ -92,12 +98,12 @@ class TrainPool(Base):
     
     id_train_pool: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     id_train_info: Mapped[int] = mapped_column(BigInteger, ForeignKey('Train_info.id_train_info'))
-    id_ex_pool: Mapped[int] = mapped_column(BigInteger, ForeignKey('Workout_ex_pool.id_ex_pool'))
     record_bool: Mapped[bool] = mapped_column(Boolean)
+    id_workout_exercises: Mapped[int] = mapped_column(BigInteger, ForeignKey('Workout_exercises.id_workout_exercises'))
     
     # Relationships
     train_info: Mapped['TrainInfo'] = relationship(back_populates='train_pools')
-    exercise_pool: Mapped['WorkoutExPool'] = relationship(back_populates='train_pools')
+    workout_exercise: Mapped['WorkoutExercises'] = relationship(back_populates='train_pools')
     approaches_records: Mapped[list['ApproachesRec']] = relationship(back_populates='train_pool')
 
 class ApproachesRec(Base):
@@ -106,7 +112,7 @@ class ApproachesRec(Base):
     id_approaches_rec: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     weight_approaches_rec: Mapped[int] = mapped_column(BigInteger)
     rest_time_up_approaches_rec: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=False), nullable=True)
-    rest_time_num_approaches_rec: Mapped[Optional[int]] = mapped_column(BigInteger, nullable=True)
+    rest_time_down_approaches_rec: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=False), nullable=True)
     num_iteration_approaches_rec: Mapped[int] = mapped_column(SmallInteger)
     id_train_pool: Mapped[int] = mapped_column(BigInteger, ForeignKey('Train_pool.id_train_pool'))
     
@@ -118,7 +124,7 @@ class Restrictions(Base):
     
     id_restrictions: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     id_workout_exercises: Mapped[int] = mapped_column(BigInteger, ForeignKey('Workout_exercises.id_workout_exercises'))
-    id_user: Mapped[int] = mapped_column(BigInteger, ForeignKey('User.id_user'))
+    id_user: Mapped[int] = mapped_column(BigInteger, ForeignKey('User.id_telegram'))
     
     # Relationships
     workout_exercise: Mapped['WorkoutExercises'] = relationship(back_populates='restrictions')

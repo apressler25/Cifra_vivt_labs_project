@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: aa5dac4d07c1
+Revision ID: 545bc0899bdc
 Revises: 
-Create Date: 2025-10-22 19:58:34.050267
+Create Date: 2025-10-23 19:28:37.586044
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'aa5dac4d07c1'
+revision: str = '545bc0899bdc'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,37 +26,40 @@ def upgrade() -> None:
     sa.Column('name_muscle_category', sa.String(length=255), nullable=False),
     sa.PrimaryKeyConstraint('id_muscle_category')
     )
-    op.create_table('Train_info',
-    sa.Column('id_train_info', sa.BigInteger(), nullable=False),
-    sa.Column('datetime_start_train_info', sa.DateTime(), nullable=False),
-    sa.Column('datetime_end_train_info', sa.DateTime(), nullable=True),
-    sa.Column('check_train_info', sa.Boolean(), nullable=False),
-    sa.PrimaryKeyConstraint('id_train_info')
-    )
     op.create_table('User',
-    sa.Column('id_user', sa.BigInteger(), nullable=False),
     sa.Column('id_telegram', sa.BigInteger(), nullable=False),
     sa.Column('name_user', sa.String(length=255), nullable=False),
     sa.Column('date_registration_user', sa.DateTime(), nullable=False),
     sa.Column('info_restrictions_user', sa.String(length=255), nullable=True),
     sa.Column('sub_user', sa.Boolean(), nullable=False),
-    sa.PrimaryKeyConstraint('id_user')
+    sa.PrimaryKeyConstraint('id_telegram')
     )
     op.create_table('Programs_workout',
     sa.Column('id_programs_workout', sa.BigInteger(), nullable=False),
     sa.Column('name_programs_workout', sa.String(length=255), nullable=False),
     sa.Column('id_user', sa.BigInteger(), nullable=False),
     sa.Column('week_day_programs_workout', sa.String(length=255), nullable=False),
-    sa.ForeignKeyConstraint(['id_user'], ['User.id_user'], ),
+    sa.ForeignKeyConstraint(['id_user'], ['User.id_telegram'], ),
     sa.PrimaryKeyConstraint('id_programs_workout')
+    )
+    op.create_table('Train_info',
+    sa.Column('id_train_info', sa.BigInteger(), nullable=False),
+    sa.Column('datetime_start_train_info', sa.DateTime(), nullable=False),
+    sa.Column('datetime_end_train_info', sa.DateTime(), nullable=True),
+    sa.Column('check_train_info', sa.Boolean(), nullable=False),
+    sa.Column('Id_user', sa.BigInteger(), nullable=False),
+    sa.Column('name_programs_workout', sa.String(length=255), nullable=False),
+    sa.ForeignKeyConstraint(['Id_user'], ['User.id_telegram'], ),
+    sa.PrimaryKeyConstraint('id_train_info')
     )
     op.create_table('Workout_exercises',
     sa.Column('id_workout_exercises', sa.BigInteger(), nullable=False),
     sa.Column('name_workout_exercises', sa.String(length=255), nullable=False),
-    sa.Column('id_creation_user', sa.String(length=255), nullable=False),
+    sa.Column('id_creation_user', sa.BigInteger(), nullable=False),
     sa.Column('notice_workout_exercises', sa.String(length=255), nullable=True),
     sa.Column('id_muscle_category', sa.SmallInteger(), nullable=False),
     sa.Column('gif_file_workout_exercises', sa.LargeBinary(), nullable=True),
+    sa.Column('vision_user', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['id_muscle_category'], ['Target_muscle_category.id_muscle_category'], ),
     sa.PrimaryKeyConstraint('id_workout_exercises')
     )
@@ -64,9 +67,18 @@ def upgrade() -> None:
     sa.Column('id_restrictions', sa.BigInteger(), nullable=False),
     sa.Column('id_workout_exercises', sa.BigInteger(), nullable=False),
     sa.Column('id_user', sa.BigInteger(), nullable=False),
-    sa.ForeignKeyConstraint(['id_user'], ['User.id_user'], ),
+    sa.ForeignKeyConstraint(['id_user'], ['User.id_telegram'], ),
     sa.ForeignKeyConstraint(['id_workout_exercises'], ['Workout_exercises.id_workout_exercises'], ),
     sa.PrimaryKeyConstraint('id_restrictions')
+    )
+    op.create_table('Train_pool',
+    sa.Column('id_train_pool', sa.BigInteger(), nullable=False),
+    sa.Column('id_train_info', sa.BigInteger(), nullable=False),
+    sa.Column('record_bool', sa.Boolean(), nullable=False),
+    sa.Column('id_workout_exercises', sa.BigInteger(), nullable=False),
+    sa.ForeignKeyConstraint(['id_train_info'], ['Train_info.id_train_info'], ),
+    sa.ForeignKeyConstraint(['id_workout_exercises'], ['Workout_exercises.id_workout_exercises'], ),
+    sa.PrimaryKeyConstraint('id_train_pool')
     )
     op.create_table('Workout_ex_pool',
     sa.Column('id_ex_pool', sa.BigInteger(), nullable=False),
@@ -80,20 +92,11 @@ def upgrade() -> None:
     sa.ForeignKeyConstraint(['id_workout_exercises'], ['Workout_exercises.id_workout_exercises'], ),
     sa.PrimaryKeyConstraint('id_ex_pool')
     )
-    op.create_table('Train_pool',
-    sa.Column('id_train_pool', sa.BigInteger(), nullable=False),
-    sa.Column('id_train_info', sa.BigInteger(), nullable=False),
-    sa.Column('id_ex_pool', sa.BigInteger(), nullable=False),
-    sa.Column('record_bool', sa.Boolean(), nullable=False),
-    sa.ForeignKeyConstraint(['id_ex_pool'], ['Workout_ex_pool.id_ex_pool'], ),
-    sa.ForeignKeyConstraint(['id_train_info'], ['Train_info.id_train_info'], ),
-    sa.PrimaryKeyConstraint('id_train_pool')
-    )
     op.create_table('Approaches_rec',
     sa.Column('id_approaches_rec', sa.BigInteger(), nullable=False),
     sa.Column('weight_approaches_rec', sa.BigInteger(), nullable=False),
     sa.Column('rest_time_up_approaches_rec', sa.DateTime(), nullable=True),
-    sa.Column('rest_time_num_approaches_rec', sa.BigInteger(), nullable=True),
+    sa.Column('rest_time_down_approaches_rec', sa.DateTime(), nullable=True),
     sa.Column('num_iteration_approaches_rec', sa.SmallInteger(), nullable=False),
     sa.Column('id_train_pool', sa.BigInteger(), nullable=False),
     sa.ForeignKeyConstraint(['id_train_pool'], ['Train_pool.id_train_pool'], ),
@@ -106,12 +109,12 @@ def downgrade() -> None:
     """Downgrade schema."""
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('Approaches_rec')
-    op.drop_table('Train_pool')
     op.drop_table('Workout_ex_pool')
+    op.drop_table('Train_pool')
     op.drop_table('Restrictions')
     op.drop_table('Workout_exercises')
+    op.drop_table('Train_info')
     op.drop_table('Programs_workout')
     op.drop_table('User')
-    op.drop_table('Train_info')
     op.drop_table('Target_muscle_category')
     # ### end Alembic commands ###
