@@ -88,6 +88,7 @@ class TrainInfo(Base):
     check_train_info: Mapped[bool] = mapped_column(Boolean)
     Id_user: Mapped[int] = mapped_column(BigInteger, ForeignKey('User.id_telegram'))
     name_programs_workout: Mapped[str] = mapped_column(String(255))
+    record_bool: Mapped[bool] = mapped_column(Boolean, default=False)
     
     # Relationships
     user: Mapped['User'] = relationship(back_populates='train_info')
@@ -98,7 +99,7 @@ class TrainPool(Base):
     
     id_train_pool: Mapped[int] = mapped_column(BigInteger, primary_key=True)
     id_train_info: Mapped[int] = mapped_column(BigInteger, ForeignKey('Train_info.id_train_info'))
-    record_bool: Mapped[bool] = mapped_column(Boolean)
+    record_bool: Mapped[bool] = mapped_column(Boolean, default=False)
     id_workout_exercises: Mapped[int] = mapped_column(BigInteger, ForeignKey('Workout_exercises.id_workout_exercises'))
     
     # Relationships
@@ -115,6 +116,7 @@ class ApproachesRec(Base):
     rest_time_down_approaches_rec: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=False), nullable=True)
     num_iteration_approaches_rec: Mapped[int] = mapped_column(SmallInteger)
     id_train_pool: Mapped[int] = mapped_column(BigInteger, ForeignKey('Train_pool.id_train_pool'))
+    record_bool: Mapped[bool] = mapped_column(Boolean, default=False)
     
     # Relationships
     train_pool: Mapped['TrainPool'] = relationship(back_populates='approaches_records')

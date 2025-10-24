@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 545bc0899bdc
+Revision ID: 9ed2010d16b4
 Revises: 
-Create Date: 2025-10-23 19:28:37.586044
+Create Date: 2025-10-24 19:54:22.308907
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '545bc0899bdc'
+revision: str = '9ed2010d16b4'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -49,6 +49,7 @@ def upgrade() -> None:
     sa.Column('check_train_info', sa.Boolean(), nullable=False),
     sa.Column('Id_user', sa.BigInteger(), nullable=False),
     sa.Column('name_programs_workout', sa.String(length=255), nullable=False),
+    sa.Column('record_bool', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['Id_user'], ['User.id_telegram'], ),
     sa.PrimaryKeyConstraint('id_train_info')
     )
@@ -99,6 +100,7 @@ def upgrade() -> None:
     sa.Column('rest_time_down_approaches_rec', sa.DateTime(), nullable=True),
     sa.Column('num_iteration_approaches_rec', sa.SmallInteger(), nullable=False),
     sa.Column('id_train_pool', sa.BigInteger(), nullable=False),
+    sa.Column('record_bool', sa.Boolean(), nullable=False),
     sa.ForeignKeyConstraint(['id_train_pool'], ['Train_pool.id_train_pool'], ),
     sa.PrimaryKeyConstraint('id_approaches_rec')
     )
