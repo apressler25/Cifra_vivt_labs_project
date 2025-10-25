@@ -31,24 +31,22 @@ class MonthlyStats(BaseModel):
     improvement_percentage: float
 
 
-class UserRecord(BaseModel):
+class UserRecord(BaseModel): #######################################################
     """Рекорд пользователя"""
     main_text: str
     description_text: str
 
 
-class UserRecordsResponse(BaseModel):
+class UserRecordsResponse(BaseModel): #######################################################
     """Ответ с рекордами пользователя"""
-    success: bool = True
-    data: List[UserRecord]
-    message: Optional[str] = None
+    
+    records: List[UserRecord]
 
 
-class WeeklyMuscleGroupsResponse(BaseModel):
+
+class WeeklyMuscleGroupsResponse(BaseModel): #######################################################
     """Ответ со списком целевых групп мышц за неделю"""
-    success: bool = True
-    data: List[int]  # список id целевых групп мышц
-    message: Optional[str] = None
+    muscle_ids: List[int]  # список id целевых групп мышц
 
 
 class ExerciseSet(BaseModel):
@@ -58,17 +56,23 @@ class ExerciseSet(BaseModel):
     date: date
 
 
-class ExerciseStats(BaseModel):
+class ExercisePoint(BaseModel):#######################################################
+    """Статистика по упражнению"""
+    weight:float
+    num_iteration:int
+    daate:str
+
+
+
+class ExerciseStats(BaseModel):#######################################################
     """Статистика по упражнению"""
     exercise_name: str
-    sets: List[List[float | int | str]]  # [[вес, повторы, дата], ...]
+    sets: List[ExercisePoint]  # [[вес, повторы, дата], ...]
 
 
-class LastWorkoutsStatsResponse(BaseModel):
+class LastWorkoutsStatsResponse(BaseModel):#######################################################
     """Ответ со статистикой за последние 5 тренировок"""
-    success: bool = True
-    data: List[ExerciseStats]
-    message: Optional[str] = None
+    last_workout_stats: List[ExerciseStats]
 
 
 class StatisticsResponse(BaseModel):

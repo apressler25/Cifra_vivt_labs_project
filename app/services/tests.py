@@ -15,11 +15,65 @@ async def create_test_data(session: AsyncSession):
     
     # 1. Target_muscle_category
     muscle_categories = [
-        TargetMuscleCategory(id_muscle_category=1, name_muscle_category="Грудь"),
-        TargetMuscleCategory(id_muscle_category=2, name_muscle_category="Спина"),
+        TargetMuscleCategory(id_muscle_category=1, name_muscle_category="Голова"),
+        TargetMuscleCategory(id_muscle_category=2, name_muscle_category="Руки"),
         TargetMuscleCategory(id_muscle_category=3, name_muscle_category="Ноги"),
-        TargetMuscleCategory(id_muscle_category=4, name_muscle_category="Плечи"),
-        TargetMuscleCategory(id_muscle_category=5, name_muscle_category="Руки")
+        TargetMuscleCategory(id_muscle_category=4, name_muscle_category="Грудь"),
+        TargetMuscleCategory(id_muscle_category=5, name_muscle_category="Плечи"),
+        TargetMuscleCategory(id_muscle_category=6, name_muscle_category="Шея"),
+        TargetMuscleCategory(id_muscle_category=7, name_muscle_category="Бицепс"),
+        TargetMuscleCategory(id_muscle_category=8, name_muscle_category="Трицепс"),
+        TargetMuscleCategory(id_muscle_category=9, name_muscle_category="Квадрицепс"),
+        TargetMuscleCategory(id_muscle_category=10, name_muscle_category="Трапеции"),
+        TargetMuscleCategory(id_muscle_category=11, name_muscle_category="Пресс"),
+        TargetMuscleCategory(id_muscle_category=12, name_muscle_category="Икроножные"),
+        TargetMuscleCategory(id_muscle_category=13, name_muscle_category="Широкие бедра"),
+        TargetMuscleCategory(id_muscle_category=14, name_muscle_category="Бицепс бедра"),
+        TargetMuscleCategory(id_muscle_category=15, name_muscle_category="Косые мышцы живота"),
+        TargetMuscleCategory(id_muscle_category=16, name_muscle_category="Широчайшие"),
+        TargetMuscleCategory(id_muscle_category=17, name_muscle_category="Круглые мышцы"),
+        TargetMuscleCategory(id_muscle_category=18, name_muscle_category="Ягодичные")
+        
+#         muscle_mapping = {
+#     1: "Голова",
+#     2: "Руки", 
+#     3: "Ноги",
+#     4: "Грудь",
+#     5: "Плечи",
+#     6: "Шея",
+#     7: "Бицепс",
+#     8: "Трицепс",
+#     9: "Квадрицепс",
+#     10: "Трапеции",
+#     11: "Пресс",
+#     12: "Икроножные",
+#     13: "Широкие бедра",
+#     14: "Бицепс бедра",
+#     15: "Косые мышцы живота",
+#     16: "Широчайшие",
+#     17: "Круглые мышцы",
+#     18: "Ягодичные"
+# }
+        
+    # 'Head': 'Голова',
+    # 'Arms': 'Руки',
+    # 'Legs': 'Ноги',
+    # 'Chest': 'Грудь',
+    # 'Deltas': 'Плечи',
+    # 'Neck': 'Шея',
+    # 'Biceps': 'Бицепс',
+    # 'Triceps': 'Трицепс',
+    # 'Quadriceps': 'Квадрицепс',
+    # 'Trapezes': 'Трапеции',
+    # 'Abdominal': 'Пресс',
+    # 'Gastrocnemius': 'Икроножные',
+    # 'Hip_wide': 'Широкие бедра',
+    # 'Hip_biceps': 'Бицепс бедра',
+    # 'Oblique_abdominal': 'Косые мышцы живота',
+    # 'Widest': 'Широчайшие',
+    # 'Round': 'Круглые мышцы',
+    # 'Gluteal': 'Ягодичные'
+
     ]
     session.add_all(muscle_categories)
     await session.flush()
