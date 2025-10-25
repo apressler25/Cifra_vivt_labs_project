@@ -78,10 +78,10 @@ async def create_user(user:UserCreateSchema, session:AsyncSession=Depends(get_as
 
 ################################# если пустые ячейки в БД ########################################
 ##################################################################################################
-# from services.tests import create_test_data
-# @userrouter.post("/testdata", name=" создать тестовые данные") # если пустые ячейки
-# async def create_testdat(session:AsyncSession=Depends(get_async_session)):
+from services.tests import create_test_data
+@userrouter.post("/testdata", name=" создать тестовые данные") # если пустые ячейки
+async def create_testdat(session:AsyncSession=Depends(get_async_session)):
     
-#     n = await create_test_data(session)
-#     return {"message":n}
+    n = await create_test_data(session)
+    return {"message":n}
 ##################################################################################################
