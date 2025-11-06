@@ -8,10 +8,12 @@ class LasttrainSchema(BaseModel):
     last_train_name_ex:str | None = None #Последняя тренировка список имен упражнений
     last_train_result_ex:str | None = None #Последняя тренировка список результатов упражнений
 
-
-
 class HomeResponseSchema(BaseModel):
-    check_train_this_day:bool # проверка есть ли сегодня тренировка
+    check_train_this_day:bool # проверка есть ли сегодня тренировка в программе
+    check_train_this_day_any_ready: bool #тренировался сегодня или нет (была ли уже запись о тренировки сегодня)
+    program_for_today_is_empty: bool #Программа тренировки на сегодня пустая?
+    program_for_today_name: str | None = None #Если сегодня есть тренировка, тут должно быть ее название
+    
     count_train_user:int | None = None #всего тренировок
     max_time_train:str | None = None #рекорд макс длительности тренировок в минутах
     record_train_info:list[LasttrainSchema] # список всех разновидностей упражнений выполненных пользователем с максимальным весом у них 

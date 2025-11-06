@@ -3,34 +3,6 @@ from typing import Optional, List, Union
 from datetime import datetime, date
 
 
-class WorkoutStats(BaseModel):
-    """Статистика тренировок"""
-    total_workouts: int
-    total_duration: int
-    calories_burned: int
-    average_workout_duration: float
-
-
-class WeeklyStats(BaseModel):
-    """Недельная статистика"""
-    week_start: date
-    week_end: date
-    workouts_completed: int
-    total_duration: int
-    calories_burned: int
-    streak_days: int
-
-
-class MonthlyStats(BaseModel):
-    """Месячная статистика"""
-    month: str
-    workouts_completed: int
-    total_duration: int
-    calories_burned: int
-    favorite_exercise: str
-    improvement_percentage: float
-
-
 class UserRecord(BaseModel): #######################################################
     """Рекорд пользователя"""
     main_text: str
@@ -74,9 +46,3 @@ class LastWorkoutsStatsResponse(BaseModel):#####################################
     """Ответ со статистикой за последние 5 тренировок"""
     last_workout_stats: List[ExerciseStats]
 
-
-class StatisticsResponse(BaseModel):
-    """Ответ со статистикой"""
-    success: bool = True
-    data: dict
-    message: Optional[str] = None

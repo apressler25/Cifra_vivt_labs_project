@@ -9,43 +9,68 @@ from sqlalchemy import func, extract
 from datetime import  date
 
 homerouter = APIRouter(prefix="/home", tags=["ГЛАВНЫЙ ЭКРАН"])
-
-
+    
 @homerouter.get("/{telegram_id}", name="Домашняя страница", response_model=HomeResponseSchema)
-async def get_mainpage(telegram_id:int, session: AsyncSession = Depends(get_async_session)):
+async def get_mainpage(telegram_id: int, session: AsyncSession = Depends(get_async_session)):
     today = date.today()
     
-    
-    # 1. Проверка есть ли сегодня тренировка
     russian_days = {
-    0: 'Понедельник',  # Monday
-    1: 'Вторник',      # Tuesday
-    2: 'Среда',        # Wednesday
-    3: 'Четверг',      # Thursday
-    4: 'Пятница',      # Friday
-    5: 'Суббота',      # Saturday
-    6: 'Воскресенье'   # Sunday
-}
+        0: 'Понедельник',  # Monday
+        1: 'Вторник',      # Tuesday
+        2: 'Среда',        # Wednesday
+        3: 'Четверг',      # Thursday
+        4: 'Пятница',      # Friday
+        5: 'Суббота',      # Saturday
+        6: 'Воскресенье'   # Sunday
+    }
     today_russian = russian_days[today.weekday()]
+
+    # 1. Проверка есть ли сегодня тренировка в программе
     today_train_query = (
         select(func.count(ProgramsWorkout.id_programs_workout))
         .where(
             ProgramsWorkout.id_user == telegram_id,
-            ProgramsWorkout.week_day_programs_workout == today_russian  # Название дня недели
+            ProgramsWorkout.week_day_programs_workout == today_russian
         )
     )
     today_train_count = await session.scalar(today_train_query)
     check_train_this_day = today_train_count > 0
 
+    # 2. Тренировался ли сегодня пользователь (была ли запись о тренировке сегодня)
+    today_trained_query = (
+        select(func.count(TrainInfo.id_train_info))
+        .where(
+            TrainInfo.Id_user == telegram_id,
+            func.date(TrainInfo.datetime_start_train_info) == today
+        )
+    )
+    today_trained_count = await session.scalar(today_trained_query)
+    check_train_this_day_any_ready = today_trained_count > 0
 
-    # 2. Всего тренировок пользователя
+    # 3. Название программы на сегодня (если есть)
+    program_for_today_name = None
+    if check_train_this_day:
+        program_name_query = (
+            select(ProgramsWorkout.name_programs_workout)
+            .where(
+                ProgramsWorkout.id_user == telegram_id,
+                ProgramsWorkout.week_day_programs_workout == today_russian
+            )
+            .limit(1)
+        )
+        program_for_today_name = await session.scalar(program_name_query)
+
+    # 4. Программа тренировки на сегодня пустая?
+    program_for_today_is_empty = not check_train_this_day
+
+    # 5. Всего тренировок пользователя
     count_train_query = (
         select(func.count(TrainInfo.id_train_info))
         .where(TrainInfo.Id_user == telegram_id)
     )
     count_train_user = await session.scalar(count_train_query) or 0
 
-    # 3. Общее время всех тренировок в формате "1 ч 30 мин"
+    # 6. Общее время всех тренировок в формате "1 ч 30 мин"
     total_time_query = (
         select(
             func.sum(
@@ -68,10 +93,7 @@ async def get_mainpage(telegram_id:int, session: AsyncSession = Depends(get_asyn
     else:
         max_time_train = "0 ч 0 мин"
 
-
-
-
-    # 4. Упражнение с рекордом по весу и сам вес
+    # 7. Упражнение с рекордом по весу и сам вес
     record_train_query = (
         select(
             WorkoutExercises.name_workout_exercises,
@@ -95,18 +117,18 @@ async def get_mainpage(telegram_id:int, session: AsyncSession = Depends(get_asyn
         record_train_info.append(
             LasttrainSchema(
                 last_train_name_ex=exercise_name,
-                last_train_result_ex=f"{max_weight} кг"  # Форматируем вес
+                last_train_result_ex=f"{max_weight} кг"
             )
         )
 
-    # 5. Количество программ пользователя
+    # 8. Количество программ пользователя
     program_count_query = (
         select(func.count(ProgramsWorkout.id_programs_workout))
         .where(ProgramsWorkout.id_user == telegram_id)
     )
     program_user_name_count = await session.scalar(program_count_query) or 0
 
-    # 6. Данные последней тренировки
+    # 9. Данные последней тренировки
     last_train_query = (
         select(
             TrainInfo.id_train_info,
@@ -134,7 +156,7 @@ async def get_mainpage(telegram_id:int, session: AsyncSession = Depends(get_asyn
             .join(WorkoutExercises, TrainPool.id_workout_exercises == WorkoutExercises.id_workout_exercises)
             .join(ApproachesRec, TrainPool.id_train_pool == ApproachesRec.id_train_pool)
             .where(TrainPool.id_train_info == last_train_id)
-            .group_by(WorkoutExercises.name_workout_exercises)  # Группируем по названию упражнения
+            .group_by(WorkoutExercises.name_workout_exercises)
         )
         last_exercises_result = await session.execute(last_exercises_query)
         last_exercises = last_exercises_result.all()
@@ -152,12 +174,14 @@ async def get_mainpage(telegram_id:int, session: AsyncSession = Depends(get_asyn
                 )
             )
 
-        return HomeResponseSchema(
-            check_train_this_day=check_train_this_day,
-            count_train_user=count_train_user,
-            max_time_train=max_time_train,
-            record_train_info=record_train_info,
-            program_user_name_count=program_user_name_count,
-            last_train_ex=last_train_exercises
-        )
-    
+    return HomeResponseSchema(
+        check_train_this_day=check_train_this_day,
+        check_train_this_day_any_ready=check_train_this_day_any_ready,
+        program_for_today_is_empty=program_for_today_is_empty,
+        program_for_today_name=program_for_today_name,
+        count_train_user=count_train_user,
+        max_time_train=max_time_train,
+        record_train_info=record_train_info,
+        program_user_name_count=program_user_name_count,
+        last_train_ex=last_train_exercises
+    )

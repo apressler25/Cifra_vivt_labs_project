@@ -1,11 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 from typing import Optional
 from datetime import datetime, date
-
-# class StatusResponse(BaseModel):
-#     status: str  # "ok" или "fail"
-#     message: str | None = None
-#     data: dict | None = None #id если создание записи
     
 class StatusResponse(BaseModel):
     status: bool  # "True" или "False"
