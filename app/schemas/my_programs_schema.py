@@ -55,7 +55,7 @@ class ProgramTrainSchema(BaseModel):
     id_program:int
     name_program:str
     day:str
-    workout_ex_in_program:list[workoutexSchema]
+    workout_ex_in_program:list[workoutexSchema] | None = None 
     
 class AllProgramsTrainSchema(BaseModel):
     program_train:list[ProgramTrainSchema]

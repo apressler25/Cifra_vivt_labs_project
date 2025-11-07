@@ -7,7 +7,7 @@ from schemas.my_programs_schema import (WorkoutmyexSchema,  WorkoutcreateexSchem
 from sqlalchemy.ext.asyncio import AsyncSession
 from db.engine import get_async_session
 from sqlalchemy.future import select
-
+from sqlalchemy import delete
 from models.models_bd import (User,  WorkoutExPool, ProgramsWorkout, 
                             WorkoutExercises,TargetMuscleCategory, Restrictions)
 
@@ -194,9 +194,9 @@ async def get_user_programs(
             TargetMuscleCategory.name_muscle_category
         )
         .select_from(ProgramsWorkout)
-        .join(WorkoutExPool, ProgramsWorkout.id_programs_workout == WorkoutExPool.id_programs_workout)
-        .join(WorkoutExercises, WorkoutExPool.id_workout_exercises == WorkoutExercises.id_workout_exercises)
-        .join(TargetMuscleCategory, WorkoutExercises.id_muscle_category == TargetMuscleCategory.id_muscle_category)
+        .outerjoin(WorkoutExPool, ProgramsWorkout.id_programs_workout == WorkoutExPool.id_programs_workout)
+        .outerjoin(WorkoutExercises, WorkoutExPool.id_workout_exercises == WorkoutExercises.id_workout_exercises)
+        .outerjoin(TargetMuscleCategory, WorkoutExercises.id_muscle_category == TargetMuscleCategory.id_muscle_category)
         .where(ProgramsWorkout.id_user == telegram_id)
         .order_by(
             ProgramsWorkout.id_programs_workout,
@@ -222,20 +222,20 @@ async def get_user_programs(
                 'day': row[2],
                 'workout_ex_in_program': []
             }
-        
+        if row[8] is not None:
         # Создаем объект упражнения
-        exercise = workoutexSchema(
-            id_workout_ex=row[8],  # WorkoutExercises.id_workout_exercises
-            name_workout_ex=row[9],  # WorkoutExercises.name_workout_exercises
-            max_target_iteration_ex_pool=row[4],  # WorkoutExPool.max_target_iteration_ex_pool
-            min_target_iteration_ex_pool=row[5],  # WorkoutExPool.min_target_iteration_ex_pool
-            approaches_target_ex_pool=row[6],  # WorkoutExPool.approaches_target_ex_pool
-            weight_ex_pool=row[7],  # WorkoutExPool.weight_ex_pool
-            id_muscle_category=row[10],  # TargetMuscleCategory.id_muscle_category
-            name_muscle_category=row[11]  # TargetMuscleCategory.name_muscle_category
-        )
+            exercise = workoutexSchema(
+                id_workout_ex=row[8],  # WorkoutExercises.id_workout_exercises
+                name_workout_ex=row[9],  # WorkoutExercises.name_workout_exercises
+                max_target_iteration_ex_pool=row[4],  # WorkoutExPool.max_target_iteration_ex_pool
+                min_target_iteration_ex_pool=row[5],  # WorkoutExPool.min_target_iteration_ex_pool
+                approaches_target_ex_pool=row[6],  # WorkoutExPool.approaches_target_ex_pool
+                weight_ex_pool=row[7],  # WorkoutExPool.weight_ex_pool
+                id_muscle_category=row[10],  # TargetMuscleCategory.id_muscle_category
+                name_muscle_category=row[11]  # TargetMuscleCategory.name_muscle_category
+            )
         
-        programs_dict[program_id]['workout_ex_in_program'].append(exercise)
+            programs_dict[program_id]['workout_ex_in_program'].append(exercise)
     
     # Создаем список программ
     program_train_list = [
@@ -357,6 +357,10 @@ async def delete_program(
             )
         
         # Удаляем программу
+        
+        delete_ex_pool_query = delete(WorkoutExPool).where(WorkoutExPool.id_programs_workout == program_id)
+        await session.execute(delete_ex_pool_query)
+        
         await session.delete(program)
         await session.commit()
         
