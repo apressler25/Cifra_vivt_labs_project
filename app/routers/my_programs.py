@@ -34,7 +34,7 @@ async def get_workoutex(telegram_id:int, session: AsyncSession = Depends(get_asy
         )
         .join(TargetMuscleCategory, WorkoutExercises.id_muscle_category == TargetMuscleCategory.id_muscle_category)
         .join(User, WorkoutExercises.id_creation_user == User.id_telegram)
-        .where(User.id_telegram == telegram_id)
+        .where(User.id_telegram == telegram_id, WorkoutExercises.vision_user == True )
         )
     
     result = await session.execute(q)
@@ -107,7 +107,12 @@ async def delete_workout_exercise(
                 message="Упражнение не найдено"
             )
         
-        # Устанавливаем vision_user в False (мягкое удаление)
+        # Удаляем связанные записи из таблицы Workout_ex_pool
+        delete_pool_query = delete(WorkoutExPool).where(WorkoutExPool.id_workout_exercises == workoutex_id)
+        await session.execute(delete_pool_query)
+        
+        
+        # Устанавливаем vision_user в False
         exercise.vision_user = False
         
         session.add(exercise)
@@ -226,7 +231,7 @@ async def get_user_programs(
         if row[8] is not None:
         # Создаем объект упражнения
             exercise = workoutexSchema(
-                id_workout_ex=row[8],  # WorkoutExercises.id_workout_exercises
+                id_workout_ex=row[3],  # WorkoutExPool.id_ex_pool
                 name_workout_ex=row[9],  # WorkoutExercises.name_workout_exercises
                 max_target_iteration_ex_pool=row[4],  # WorkoutExPool.max_target_iteration_ex_pool
                 min_target_iteration_ex_pool=row[5],  # WorkoutExPool.min_target_iteration_ex_pool
@@ -542,12 +547,6 @@ async def delete_workout_ex_pool_item(
                 message="Упражнение в тренировке не найдено"
             )
         
-        # Сохраняем информацию для ответа
-        deleted_data = {
-            "id_ex_pool": ex_pool_item.id_ex_pool,
-            "id_programs_workout": ex_pool_item.id_programs_workout,
-            "id_workout_exercises": ex_pool_item.id_workout_exercises
-        }
         
         # Удаляем запись из пула упражнений
         await session.delete(ex_pool_item)
