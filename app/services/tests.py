@@ -54,25 +54,7 @@ async def create_test_data(session: AsyncSession):
 #     17: "Круглые мышцы",
 #     18: "Ягодичные"
 # }
-        
-    # 'Head': 'Голова',
-    # 'Arms': 'Руки',
-    # 'Legs': 'Ноги',
-    # 'Chest': 'Грудь',
-    # 'Deltas': 'Плечи',
-    # 'Neck': 'Шея',
-    # 'Biceps': 'Бицепс',
-    # 'Triceps': 'Трицепс',
-    # 'Quadriceps': 'Квадрицепс',
-    # 'Trapezes': 'Трапеции',
-    # 'Abdominal': 'Пресс',
-    # 'Gastrocnemius': 'Икроножные',
-    # 'Hip_wide': 'Широкие бедра',
-    # 'Hip_biceps': 'Бицепс бедра',
-    # 'Oblique_abdominal': 'Косые мышцы живота',
-    # 'Widest': 'Широчайшие',
-    # 'Round': 'Круглые мышцы',
-    # 'Gluteal': 'Ягодичные'
+
 
     ]
     session.add_all(muscle_categories)
@@ -104,6 +86,238 @@ async def create_test_data(session: AsyncSession):
     
     # 3. Workout_exercises (больше упражнений для разнообразия)
     workout_exercises = [
+        
+        
+        # Упражнения для ног (3)
+        WorkoutExercises(id_workout_exercises=1, name_workout_exercises="Приседания со штангой", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Расположите штангу на трапециях, ноги на ширине плеч. Медленно опускайтесь до параллели бедер с полом, сохраняя спину прямой. Поднимайтесь мощным движением, выдыхая в верхней точке. Колени не должны выходить за носки.", 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=2, name_workout_exercises="Жим ногами", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Сядьте в тренажер, плотно прижмите спину к спинке. Ноги поставьте на платформу на ширине плеч. Медленно опускайте платформу до угла 90 градусов в коленях, затем мощно выжимайте вверх. Не разгибайте колени полностью.", 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=3, name_workout_exercises="Выпады с гантелями", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмите гантели в обе руки. Сделайте шаг вперед, опускаясь до образования двух прямых углов в коленях. Переднее колено не должно выходить за носок. Вернитесь в исходное положение, оттолкнувшись передней ногой.", 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=4, name_workout_exercises="Сгибание ног лежа", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте на тренажер, валики должны располагаться на ахилловых сухожилиях. Плавно сгибайте ноги, поднимая валики к ягодицам. В верхней точке задержитесь на 1-2 секунды, затем медленно опускайте ноги. Не отрывайте таз от скамьи.", 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для груди (4)
+        WorkoutExercises(id_workout_exercises=5, name_workout_exercises="Жим штанги лежа", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте на скамью, стопы плотно на полу. Возьмитесь за гриф чуть шире плеч. Опускайте штангу к нижней части груди, локти под углом 45 градусов. Мощно выжмите штангу вверх, полностью выпрямляя руки.", 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=6, name_workout_exercises="Жим гантелей на наклонной скамье", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Установите скамью под углом 30-45 градусов. Возьмите гантели, опустите их к верхней части груди. Локти направлены в стороны под углом 45 градусов. Выжмите гантели вверх по дуге, в верхней точке сведите их вместе.", 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=7, name_workout_exercises="Разведение гантелей лежа", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте на скамью, поднимите гантели над грудью. Медленно разводите руки в стороны, слегка сгибая локти. Опускайте гантели до уровня груди, чувствуя растяжение. Плавно сведите руки в исходное положение.", 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=8, name_workout_exercises="Отжимания на брусьях", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмитесь за брусья, скрестив ноги. Медленно опускайтесь, наклоняя корпус вперед для акцента на грудь. Опускайтесь до угла 90 градусов в локтях. Мощно отожмитесь вверх, выдыхая в верхней точке.", 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для спины (16 - широчайшие)
+        WorkoutExercises(id_workout_exercises=9, name_workout_exercises="Становая тяга", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Поставьте ноги на ширине плеч, штанга над стопами. Возьмитесь за гриф прямым хватом. Держа спину прямой, мощно поднимите штангу вдоль ног. В верхней точке сведите лопатки. Медленно опустите штангу по той же траектории.", 
+                        id_muscle_category=16, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=10, name_workout_exercises="Подтягивания широким хватом", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмитесь за перекладину широким хватом. Сведите лопатки, подтянитесь до уровня подбородка. В верхней точке задержитесь на 1 секунду. Медленно опуститесь в исходное положение. Не раскачивайте корпус.", 
+                        id_muscle_category=16, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=11, name_workout_exercises="Тяга штанги в наклоне", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Наклоните корпус вперед до параллели с полом. Возьмите штангу прямым хватом. Подтяните штангу к низу живота, сводя лопатки. Локти должны двигаться вдоль тела. Медленно опустите штангу, чувствуя растяжение в спине.", 
+                        id_muscle_category=16, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=12, name_workout_exercises="Тяга верхнего блока", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Сядьте в тренажер, зафиксируйте бедра. Возьмитесь за рукоять широким хватом. Плавно потяните рукоять к груди, отклоняя корпус назад. Сведите лопатки в нижней точке. Медленно верните рукоять в исходное положение.", 
+                        id_muscle_category=16, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для плеч (5)
+        WorkoutExercises(id_workout_exercises=13, name_workout_exercises="Армейский жим", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя или сидя, поднимите штангу до уровня груди. Ладони чуть шире плеч. Выжмите штангу строго вверх над головой. В верхней точке полностью выпрямите руки. Медленно опустите штангу до ключиц.", 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=14, name_workout_exercises="Махи гантелями в стороны", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя, держите гантели по бокам. Слегка согните локти. Поднимите гантели через стороны до уровня плеч. В верхней точке мизинец должен быть выше большого пальца. Медленно опустите гантели, контролируя движение.", 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=15, name_workout_exercises="Тяга штанги к подбородку", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмите штангу узким хватом. Поднимите локти в стороны, тяните штангу вдоль тела до уровня подбородок. Локти должны быть выше кистей. Медленно опустите штангу в исходное положение. Держите корпус прямым.", 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для бицепса (7)
+        WorkoutExercises(id_workout_exercises=16, name_workout_exercises="Подъем штанги на бицепс", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя, возьмите штангу обратным хватом. Локти прижмите к бокам. Поднимите штангу до уровня плеч, сокращая бицепсы. В верхней точке задержитесь на 1 секунду. Медленно опустите штангу, полностью выпрямляя руки.", 
+                        id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=17, name_workout_exercises="Подъем гантелей на бицепс", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Сидя или стоя, держите гантели нейтральным хватом. Поочередно или одновременно сгибайте руки, разворачивая кисти наружу. В верхней точке максимально сократите бицепсы. Медленно опустите гантели с контролем.", 
+                        id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=18, name_workout_exercises="Молотки с гантелями", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Держите гантели нейтральным хватом (ладони смотрят друг на друга). Поднимайте гантели к плечам, сохраняя положение кистей. Локти неподвижны вдоль тела. В верхней точке задержитесь, затем медленно опустите.", 
+                        id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для трицепса (8)
+        WorkoutExercises(id_workout_exercises=19, name_workout_exercises="Французский жим", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лежа на скамье, поднимите штангу над грудью. Медленно опускайте штангу ко лбу, сгибая только локтевые суставы. Локти направлены вверх и немного внутрь. Мощно выпрямите руки, возвращая штангу в исходное положение.", 
+                        id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=20, name_workout_exercises="Жим лежа узким хватом", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте на скамью, возьмитесь за гриф на ширине плеч. Опускайте штангу к низу груди, локти прижаты к телу. Выжимайте штангу вверх, фокусируясь на работе трицепсов. Не разводите локти в стороны.", 
+                        id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=21, name_workout_exercises="Разгибание на блоке", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя у блока, возьмитесь за рукоять прямым хватом. Локти прижаты к бокам. Разгибайте руки вниз, полностью выпрямляя их. В нижней точке задержитесь на 1-2 секунды. Медленно верните рукоять в исходное положение.", 
+                        id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для пресса (11)
+        WorkoutExercises(id_workout_exercises=22, name_workout_exercises="Скручивания на пресс", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лежа на полу, согните ноги в коленях. Руки за головой или скрещены на груди. На выдохе поднимите верхнюю часть туловища, скручивая пресс. Поясница остается на полу. На вдохе медленно опуститесь в исходное положение.", 
+                        id_muscle_category=11, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=23, name_workout_exercises="Подъем ног в висе", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Повисните на перекладине. Медленно поднимите прямые ноги до параллели с полом или выше. В верхней точке задержитесь на 1-2 секунды. Медленно опустите ноги, не раскачивая корпус. Для усложнения можно поднимать ноги к перекладине.", 
+                        id_muscle_category=11, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=24, name_workout_exercises="Планка", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Примите упор лежа на предплечьях. Локти под плечами, тело образует прямую линию от головы до пяток. Напрягите пресс и ягодицы, не прогибайтесь в пояснице. Дышите ровно. Удерживайте положение заданное время.", 
+                        id_muscle_category=11, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для икр (12)
+        WorkoutExercises(id_workout_exercises=25, name_workout_exercises="Подъемы на носки стоя", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Встаньте носками на платформу в тренажере, пятки опущены. Поднимитесь на носки как можно выше, напрягая икроножные мышцы. В верхней точке задержитесь на 1-2 секунды. Медленно опустите пятки ниже уровня платформы для растяжения.", 
+                        id_muscle_category=12, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=26, name_workout_exercises="Подъемы на носки сидя", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Сядьте в тренажер, поставьте носки на платформу. Опустите пятки как можно ниже. Поднимитесь на носки, максимально сокращая камбаловидные мышцы. Задержитесь в верхней точке. Медленно вернитесь в исходное положение.", 
+                        id_muscle_category=12, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для ягодиц (18)
+        WorkoutExercises(id_workout_exercises=27, name_workout_exercises="Ягодичный мост", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лежа на спине, согните ноги, стопы на полу. Поднимите таз вверх, сжимая ягодицы. В верхней точке тело должно образовать прямую линию от плеч до колен. Задержитесь на 2-3 секунды. Медленно опустите таз, не касаясь пола.", 
+                        id_muscle_category=18, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=28, name_workout_exercises="Махи ногой назад", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя на четвереньках. Поднимите согнутую ногу назад и вверх, максимально сокращая ягодичную мышцу. В верхней точке задержитесь на 1-2 секунды. Медленно верните ногу в исходное положение. Не прогибайте поясницу.", 
+                        id_muscle_category=18, gif_file_workout_exercises=None, vision_user=True),
+        
+        
+        
+        
+        
+            # Упражнения для головы (1) - мышцы шеи и лица
+        WorkoutExercises(id_workout_exercises=29, name_workout_exercises="Жим штанги с подъемом головы", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Выполняя жим штанги стоя или сидя, сознательно напрягайте мышцы шеи и поддерживайте правильное положение головы. Это укрепляет глубокие мышцы шеи и улучшает осанку при работе с весами.",
+                        id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=30, name_workout_exercises="Тяга к подбородку с напряжением шеи", id_creation_user=1, 
+                        notice_workout_exercises="Техника: При выполнении тяги штанги к подбородку сохраняйте шею в нейтральном положении, напрягая мышцы для стабилизации. Локти поднимайте выше уровня плеч для комплексной нагрузки.",
+                        id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для рук (2) - комплексные
+        WorkoutExercises(id_workout_exercises=31, name_workout_exercises="Подъем штанги на бицепс с супинацией", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмите штангу обратным хватом. При подъеме разворачивайте кисти наружу (супинация). В верхней точке максимально сокращайте бицепсы. Медленно опускайте с контролем.",
+                        id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=32, name_workout_exercises="Молотковые сгибания с гантелями", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Держите гантели нейтральным хватом. Поднимайте гантели к плечам, сохраняя положение ладоней. Локти прижаты к корпусу. Упражнение развивает плечевую и плече-лучевую мышцы.",
+                        id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для шеи (6)
+        WorkoutExercises(id_workout_exercises=33, name_workout_exercises="Шраги со штангой за спиной", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмите штангу за спиной прямым хватом. Поднимайте плечи вертикально вверх, максимально сокращая трапеции и мышцы шеи. Задержитесь в верхней точке на 2 секунды.",
+                        id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=34, name_workout_exercises="Тяга лица на блоке", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Установите тросовый блок на уровне лица. Возьмитесь за канатную рукоять, тяните ее к лицу, разводя руки в стороны. Локти высоко, лопатки сведены. Укрепляет задние дельты и мышцы шеи.",
+                        id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для квадрицепса (9)
+        WorkoutExercises(id_workout_exercises=35, name_workout_exercises="Приседания в тренажере Смита", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Встаньте в тренажер Смита, штанга на трапециях. Выполняйте приседания, концентрируясь на работе квадрицепсов. Опускайтесь до параллели, мощно поднимайтесь вверх.",
+                        id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=36, name_workout_exercises="Жим ногами с узкой постановкой", id_creation_user=1, 
+                        notice_workout_exercises="Техника: В тренажере для жима ногами поставьте стопы близко друг к другу в нижней части платформы. Это смещает нагрузку на квадрицепсы. Выполняйте жим с полной амплитудой.",
+                        id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=37, name_workout_exercises="Выпады в тренажере Смита", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Поместите штангу в тренажере Смита на плечи. Выполняйте выпады вперед, сохраняя равновесие. Переднее колено не выходит за носок. Чередуйте ноги.",
+                        id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для трапеций (10)
+        WorkoutExercises(id_workout_exercises=38, name_workout_exercises="Шраги со штангой", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя прямо, держите штангу перед бедрами. Поднимайте плечи как можно выше к ушам. В верхней точке задержитесь на 2-3 секунды. Опускайте медленно с контролем.",
+                        id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=39, name_workout_exercises="Шраги с гантелями", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Держите гантели по бокам. Выполняйте вертикальные подъемы плеч. Можно добавить круговые движения плечами для комплексной проработки всех пучков трапеций.",
+                        id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=40, name_workout_exercises="Тяга штанги к подбородку широким хватом", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Возьмите штангу широким хватом. Поднимайте локти в стороны, тяните штангу вдоль тела до уровня груди. Акцент на трапеции и дельты. Медленно опускайте.",
+                        id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для широких бедер (13)
+        WorkoutExercises(id_workout_exercises=41, name_workout_exercises="Приседания сумо", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Поставьте ноги значительно шире плеч, носки развернуты наружу. Опускайтесь в присед, сохраняя спину прямой. Колени направлены в стороны. Мощно поднимайтесь.",
+                        id_muscle_category=13, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=42, name_workout_exercises="Сведения ног в тренажере", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Сядьте в тренажер, установите comfortable вес. Сводите бедра, преодолевая сопротивление. В точке максимального сведения задержитесь на 1-2 секунды. Медленно возвращайтесь.",
+                        id_muscle_category=13, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=43, name_workout_exercises="Боковые выпады с гантелями", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Держите гантели в обеих руках. Сделайте широкий шаг в сторону, опускаясь на согнутую ногу. Вторая нога прямая. Возвращайтесь в исходное положение мощным движением.",
+                        id_muscle_category=13, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для бицепса бедра (14)
+        WorkoutExercises(id_workout_exercises=44, name_workout_exercises="Румынская тяга со штангой", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Держите штангу перед бедрами. Наклоняйтесь вперед, отводя таз назад. Опускайте штангу до середины голеней. Чувствуйте растяжение в бицепсах бедер. Возвращайтесь за счет силы задней поверхности.",
+                        id_muscle_category=14, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=45, name_workout_exercises="Сгибания ног лежа", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте на тренажер лицом вниз, валики на ахилловых сухожилиях. Сгибайте ноги, поднимая валики к ягодицам. В верхней точке максимально сократите бицепсы бедер. Медленно опускайте.",
+                        id_muscle_category=14, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=46, name_workout_exercises="Гудмонинги (Good Mornings)", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Положите штангу на трапеции как при приседаниях. Наклоняйтесь вперед с прямой спиной до параллели с полом. Возвращайтесь в исходное положение за счет бицепсов бедер.",
+                        id_muscle_category=14, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для косых мышц живота (15)
+        WorkoutExercises(id_workout_exercises=47, name_workout_exercises="Боковые скручивания на римском стуле", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте на римский стул боком. Руки за головой. Поднимайте корпус вбок, сокращая косые мышцы. Выполняйте медленно с полным контролем. Чередуйте стороны.",
+                        id_muscle_category=15, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=48, name_workout_exercises="Русские скручивания с диском", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Сядьте на пол, отклоните корпус назад, ноги подняты. Держите диск перед собой. Поворачивайте корпус с диском из стороны в стороны. Держите пресс напряженным.",
+                        id_muscle_category=15, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=49, name_workout_exercises="Боковые наклоны с гантелью", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Стоя прямо, держите гантель в одной руке. Наклоняйтесь в противоположную сторону, чувствуя растяжение косых мышц. Возвращайтесь в исходное положение. Чередуйте стороны.",
+                        id_muscle_category=15, gif_file_workout_exercises=None, vision_user=True),
+
+        # Упражнения для круглых мышц (17)
+        WorkoutExercises(id_workout_exercises=50, name_workout_exercises="Тяга гантели в наклоне", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Упритесь коленом и рукой в скамью. Возьмите гантель, подтяните ее к поясу. Локоть направлен вверх. В верхней точке максимально сведите лопатку. Медленно опустите.",
+                        id_muscle_category=17, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=51, name_workout_exercises="Тяга Т-грифа", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Встаньте в тренажер для тяги Т-грифа. Возьмитесь за рукояти, подтягивайте гриф к груди. Локти направлены вдоль тела. Сводите лопатки в верхней точке.",
+                        id_muscle_category=17, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(id_workout_exercises=52, name_workout_exercises="Пуловер с гантелью лежа", id_creation_user=1, 
+                        notice_workout_exercises="Техника: Лягте поперек скамьи, упираясь лопатками. Возьмите гантель двумя руками над грудью. Опускайте гантель за голову, чувствуя растяжение. Плавно возвращайте в исходное положение.",
+                        id_muscle_category=17, gif_file_workout_exercises=None, vision_user=True),
+
         # Упражнения для груди
         WorkoutExercises(id_workout_exercises=2001, name_workout_exercises="Жим штанги лежа", id_creation_user=1001, notice_workout_exercises="Базовое упражнение для груди", id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
         WorkoutExercises(id_workout_exercises=2002, name_workout_exercises="Жим гантелей лежа", id_creation_user=1001, notice_workout_exercises="Для развития грудных мышц", id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
