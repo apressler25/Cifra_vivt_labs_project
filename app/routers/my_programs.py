@@ -57,7 +57,7 @@ async def get_workoutex(telegram_id:int, session: AsyncSession = Depends(get_asy
 
 
 # Создание упражнения пользователем
-@my_programs_router.post("/createworkoutex/", summary=" добавить упражнение", response_model=WorkoutExResponseSchema)
+@my_programs_router.post("/createworkoutex/", summary=" добавить упражнение", response_model=StatusResponse)
 async def create_workoutex(workoutex:WorkoutcreateexSchema, session:AsyncSession=Depends(get_async_session)):
     try:
         u = WorkoutExercises(
@@ -65,7 +65,8 @@ async def create_workoutex(workoutex:WorkoutcreateexSchema, session:AsyncSession
             id_creation_user=workoutex.id_creation_user,
             notice_workout_exercises=workoutex.notice_workout_exercises,
             id_muscle_category=workoutex.id_muscle_category,
-            gif_file_workout_exercises=workoutex.gif_file_workout_exercises
+            gif_file_workout_exercises=workoutex.gif_file_workout_exercises,
+            vision_user=True
         )
         session.add(u)
         await session.commit()
