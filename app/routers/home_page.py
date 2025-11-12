@@ -165,7 +165,7 @@ async def get_mainpage(telegram_id: int, session: AsyncSession = Depends(get_asy
             exercise_name = ex[0]
             max_weight = ex[1]
             max_iterations = ex[2]
-            result_str = f"{max_weight}кг × {max_iterations}повт."
+            result_str = f"{max_weight}кг × {max_iterations}"
             
             last_train_exercises.append(
                 LasttrainSchema(
