@@ -1,4 +1,3 @@
-version: '3.8'
 services:
   myapp:
     container_name: PYFAPI
@@ -11,7 +10,6 @@ services:
     working_dir: /app
     environment:
       - PYTHONPATH=/app 
-    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   db:
     image: postgres
