@@ -16,7 +16,7 @@ class WorkoutgetmyexitemSchema(WorkoutexitemSchema):
     id_workout_exercises: int
     str_muscle_category: str
 
-class WorkoutmyexSchema(BaseModel):
+class WorkoutmyexSchema(BaseModel): 
     exercises:list[WorkoutgetmyexitemSchema]
 
 #создание

@@ -464,7 +464,7 @@ async def get_user_features(
             raise HTTPException(status_code=404, detail="Пользователь не найден")
         
         # Если ограничений нет, возвращаем пустую строку
-        features_text = restrictions if restrictions else "Ограничения не указаны"
+        features_text = restrictions if restrictions else "Особенности не указаны"
         
         return UserFeaturesResponseSchema(features=features_text)
         

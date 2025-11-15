@@ -12,6 +12,13 @@ services:
       - PYTHONPATH=/app 
     depends_on:
       - db  # <-- добавляем эту строку
+    command: 
+    - sh
+    - -c
+    - |
+      sleep 5
+      alembic upgrade head
+      uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   db:
     image: postgres
