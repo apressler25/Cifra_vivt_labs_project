@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from db.engine import get_async_session
 from sqlalchemy.future import select
 from models.models_bd import ( TrainInfo, TrainPool,  ProgramsWorkout, 
-                            WorkoutExercises,ApproachesRec)
+                            WorkoutExercises,ApproachesRec, WorkoutExPool)
 from sqlalchemy import func, extract
 from datetime import  date
 
@@ -61,7 +61,20 @@ async def get_mainpage(telegram_id: int, session: AsyncSession = Depends(get_asy
         program_for_today_name = await session.scalar(program_name_query)
 
     # 4. Программа тренировки на сегодня пустая?
-    program_for_today_is_empty = not check_train_this_day
+    if check_train_this_day:
+        # Проверяем есть ли связанные записи в Workout_ex_pool для программ на сегодня
+        workout_ex_pool_count_query = (
+            select(func.count(WorkoutExPool.id_ex_pool))
+            .join(ProgramsWorkout, WorkoutExPool.id_programs_workout == ProgramsWorkout.id_programs_workout)
+            .where(
+                ProgramsWorkout.id_user == telegram_id,
+                ProgramsWorkout.week_day_programs_workout == today_russian
+            )
+        )
+        workout_ex_pool_count = await session.scalar(workout_ex_pool_count_query) or 0
+        program_for_today_is_empty = workout_ex_pool_count == 0
+    else:
+        program_for_today_is_empty = False
 
     # 5. Всего тренировок пользователя
     count_train_query = (
