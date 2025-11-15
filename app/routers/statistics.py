@@ -119,10 +119,10 @@ async def get_user_records(
                 description_text=f"Завершена {last_workout.datetime_start_train_info.strftime('%Y-%m-%d')}"
             ))
         
-        return UserRecordsResponse(data=records)
+        return UserRecordsResponse(records=records)
         
     except Exception as e:
-        return UserRecordsResponse(data=[])
+        return UserRecordsResponse(records=[])
         # UserRecordsResponse UserRecord
         
         
