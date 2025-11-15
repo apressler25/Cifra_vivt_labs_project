@@ -43,7 +43,7 @@ async def get_workout_dates(
         formatted_dates = []
         
         for date in dates:
-            date_str = date.strftime("%d.%m.%y")
+            date_str = date.strftime("%d.%m.%Y")
             if date_str not in unique_dates:
                 unique_dates.add(date_str)
                 formatted_dates.append(date_str)
@@ -177,7 +177,7 @@ async def get_workout_detail(
         workout_name, start_datetime, end_datetime = workout_data
         
         # Форматируем дату и время
-        workout_date = start_datetime.strftime("%d.%m.%y")
+        workout_date = start_datetime.strftime("%d.%m.%Y")
         
         if end_datetime:
             workout_time = f"{start_datetime.strftime('%H:%M')} - {end_datetime.strftime('%H:%M')}"
