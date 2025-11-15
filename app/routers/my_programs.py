@@ -178,7 +178,7 @@ async def update_workoutex(workoutex_id:int, new_workoutex_data:WorkoutexupdateS
 @my_programs_router.get("/programs/{telegram_id}", response_model=AllProgramsTrainSchema, summary="Получить программы тренировок пользователя")
 async def get_user_programs(
     telegram_id: int, 
-    session: AsyncSession = Depends(get_async_session)  # Правильная передача сессии
+    session: AsyncSession = Depends(get_async_session)  
 ):
     """
     Получение всех программ тренировок пользователя с упражнениями
@@ -214,7 +214,8 @@ async def get_user_programs(
     programs_data = result.all()
     
     if not programs_data:
-        raise HTTPException(status_code=404, detail="Программы тренировок не найдены")
+        return AllProgramsTrainSchema(program_train=[])
+        # raise HTTPException(status_code=404, detail="Программы тренировок не найдены")
     
     # Группируем данные по программам
     programs_dict = {}
