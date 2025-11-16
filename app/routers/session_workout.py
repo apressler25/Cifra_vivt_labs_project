@@ -225,7 +225,7 @@ async def get_detailed_workout_info(
             status=False,
             message=f"Ошибка при получении информации о тренировке: {str(e)}")
         
-TakeInfoTrainPoolWithExerciseUpdate, ApproachesWithExerciseUpdate
+# TakeInfoTrainPoolWithExerciseUpdate, ApproachesWithExerciseUpdate
 @session_workout_router.put('/update_exercise/{exercise_history_id}', summary='Обновление истории по упражнению', response_model=StatusResponse)
 async def update_workoutex(exercise_history_id:int, new_workoutex_data:TakeInfoTrainPoolWithExerciseUpdate, session: AsyncSession=Depends(get_async_session)):
     
@@ -255,6 +255,13 @@ async def update_workoutex(exercise_history_id:int, new_workoutex_data:TakeInfoT
         # Создаем словарь для быстрого доступа к подходам по ID
         approaches_dict = {approach.id_approaches_rec: approach for approach in train_pool.approaches_records}
         
+                # Функция для преобразования datetime
+        def fix_datetime_for_db(dt):
+            """Преобразует aware datetime в naive datetime для базы данных"""
+            if dt is not None and dt.tzinfo is not None:
+                return dt.replace(tzinfo=None)
+            return dt
+        
         # Обновляем подходы
         for approach_update in new_workoutex_data.completed_sets:
             approach = approaches_dict.get(approach_update.set_id)
@@ -273,10 +280,10 @@ async def update_workoutex(exercise_history_id:int, new_workoutex_data:TakeInfoT
                 approach.num_iteration_approaches_rec = approach_update.repetitions
             
             if approach_update.rest_start_time is not None:
-                approach.rest_time_up_approaches_rec = approach_update.rest_start_time
+                approach.rest_time_up_approaches_rec = fix_datetime_for_db(approach_update.rest_start_time)
             
             if approach_update.rest_end_time is not None:
-                approach.rest_time_down_approaches_rec = approach_update.rest_end_time
+                approach.rest_time_down_approaches_rec = fix_datetime_for_db(approach_update.rest_end_time)
             
             if approach_update.was_record is not None:
                 approach.record_bool = approach_update.was_record

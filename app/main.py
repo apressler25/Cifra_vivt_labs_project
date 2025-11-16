@@ -18,9 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(userrouter)
-app.include_router(homerouter)
-app.include_router(my_programs_router)
-app.include_router(statistics_router)
-app.include_router(hystory_workout_router)
-app.include_router(session_workout_router)
+
+routers = [userrouter, homerouter, my_programs_router, statistics_router, hystory_workout_router, session_workout_router]
+
+for router in routers:
+    app.include_router(router, prefix="/api")
