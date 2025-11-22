@@ -706,92 +706,70 @@ async def create_test_data(session: AsyncSession):
     session.add_all(workout_ex_pool)
     await session.flush()
     
-    # 6. Train_info (5 выполнений каждой программы ТОЛЬКО для пользователя 1001)
+    # 6. Train_info (5 тренировок только по одной программе для пользователя 1001)
     train_info = []
     
-    # Базовый вес для пользователя 1001
-    user_base_weight = 40
+    # Берем первую программу пользователя 1001
+    user_1001_programs = [program for program in programs_workout if program.id_user == 1001]
+    selected_program = user_1001_programs[0]  # Берем первую программу (Силовая тренировка груди)
     
-    # Создаем тренировки в правильном хронологическом порядке (от старых к новым)
+    # Создаем 5 тренировок по одной программе в разные дни
     current_date = datetime.now()
     
-    # ТОЛЬКО для программ пользователя 1001
-    user_1001_programs = [program for program in programs_workout if program.id_user == 1001]
-    
-    for program in user_1001_programs:
-        # Создаем 5 выполнений этой программы в разные дни
-        for day in range(5):
-            # Создаем разные даты для каждой тренировки
-            days_ago = 14 - day * 3  # 14, 11, 8, 5, 2 дней назад
-            train_date = current_date - timedelta(days=days_ago)
-            
-            train_info.append(TrainInfo(
-                datetime_start_train_info=train_date,
-                datetime_end_train_info=train_date + timedelta(hours=1, minutes=30),
-                check_train_info=True,
-                Id_user=1001,  # Только пользователь 1001
-                name_programs_workout=program.name_programs_workout
-            ))
+    for day in range(5):
+        # Создаем дату тренировки (каждые 3 дня)
+        days_ago = 12 - day * 3  # 12, 9, 6, 3, 0 дней назад
+        train_date = current_date - timedelta(days=days_ago)
+        
+        # Устанавливаем разумное время тренировки
+        train_start = train_date.replace(hour=10 + day, minute=0, second=0, microsecond=0)
+        train_end = train_start + timedelta(hours=1, minutes=30)
+        
+        train_info.append(TrainInfo(
+            datetime_start_train_info=train_start,
+            datetime_end_train_info=train_end,
+            check_train_info=True,
+            Id_user=1001,
+            name_programs_workout=selected_program.name_programs_workout
+        ))
     
     session.add_all(train_info)
     await session.flush()
     
-    # 7. Train_pool (упражнения для тренировок ТОЛЬКО пользователя 1001)
+    # 7. Train_pool (упражнения для тренировок)
     train_pool = []
     
     for train in train_info:
-        program = next((pw for pw in programs_workout 
-                       if pw.name_programs_workout == train.name_programs_workout 
-                       and pw.id_user == train.Id_user), None)
+        program_exercises = [ex for ex in workout_ex_pool 
+                           if ex.id_programs_workout == selected_program.id_programs_workout]
         
-        if program:
-            program_exercises = [ex for ex in workout_ex_pool 
-                               if ex.id_programs_workout == program.id_programs_workout]
-            
-            for ex in program_exercises:
-                train_pool.append(TrainPool(
-                    id_train_info=train.id_train_info,
-                    record_bool=False,
-                    id_workout_exercises=ex.id_workout_exercises
-                ))
+        for ex in program_exercises:
+            train_pool.append(TrainPool(
+                id_train_info=train.id_train_info,
+                record_bool=False,
+                id_workout_exercises=ex.id_workout_exercises
+            ))
     
     session.add_all(train_pool)
     await session.flush()
     
-    # 8. Approaches_rec (подходы ТОЛЬКО для пользователя 1001)
+    # 8. Approaches_rec (подходы с прогрессией весов)
     approaches_rec = []
     
-    # Группируем тренировки по программам пользователя 1001 и сортируем по дате
-    program_trainings = {}
-    for train in train_info:
-        key = (train.Id_user, train.name_programs_workout)
-        if key not in program_trainings:
-            program_trainings[key] = []
-        program_trainings[key].append(train)
+    # Сортируем тренировки по дате (от старых к новым)
+    train_info_sorted = sorted(train_info, key=lambda x: x.datetime_start_train_info)
     
-    # Сортируем тренировки внутри каждой программы по дате (от старых к новым)
-    for key in program_trainings:
-        program_trainings[key].sort(key=lambda x: x.datetime_start_train_info)
-    
-    for train_pool_item in train_pool:
-        train = next((t for t in train_info if t.id_train_info == train_pool_item.id_train_info), None)
+    for i, train in enumerate(train_info_sorted):
+        # Находим все train_pool для этой тренировки
+        train_pools_for_train = [tp for tp in train_pool if tp.id_train_info == train.id_train_info]
         
-        if train:
-            key = (train.Id_user, train.name_programs_workout)
-            program_trains = program_trainings.get(key, [])
-            
-            # Находим индекс этой тренировки в последовательности
-            try:
-                day_index = program_trains.index(train)
-            except ValueError:
-                day_index = 0
-            
+        for train_pool_item in train_pools_for_train:
             ex_pool_item = next((ex for ex in workout_ex_pool 
                                if ex.id_workout_exercises == train_pool_item.id_workout_exercises), None)
             
             if ex_pool_item:
-                # Правильное увеличение веса: старые тренировки - меньший вес, новые - больший
-                day_weight_increase = day_index * 5  # +5 кг с каждой следующей тренировкой
+                # Увеличиваем вес с каждой тренировкой
+                day_weight_increase = i * 5  # +5 кг с каждой следующей тренировкой
                 base_weight = ex_pool_item.weight_ex_pool + day_weight_increase
                 base_iterations = ex_pool_item.min_target_iteration_ex_pool
                 
@@ -805,10 +783,13 @@ async def create_test_data(session: AsyncSession):
                     iterations = base_iterations - approach_num
                     iterations = max(iterations, 4)
                     
+                    # Время подходов относительно начала тренировки
+                    approach_time = train.datetime_start_train_info + timedelta(minutes=10 + approach_num * 5)
+                    
                     approaches_rec.append(ApproachesRec(
                         weight_approaches_rec=weight,
-                        rest_time_up_approaches_rec=train.datetime_start_train_info + timedelta(minutes=10 + approach_num),
-                        rest_time_down_approaches_rec=train.datetime_start_train_info + timedelta(minutes=9 + approach_num),
+                        rest_time_up_approaches_rec=approach_time,
+                        rest_time_down_approaches_rec=approach_time + timedelta(minutes=1),
                         num_iteration_approaches_rec=iterations,
                         id_train_pool=train_pool_item.id_train_pool
                     ))
