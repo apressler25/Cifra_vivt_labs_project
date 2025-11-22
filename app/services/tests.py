@@ -462,7 +462,7 @@ async def create_test_data(session: AsyncSession):
     session.add_all(muscle_categories)
     await session.flush()
     
-    # 2. User (3 пользователя)
+        # 2. User (3 пользователя)
     users = [
         User(
             id_telegram=1001,
@@ -486,235 +486,221 @@ async def create_test_data(session: AsyncSession):
     session.add_all(users)
     await session.flush()
     
-    # 3. Workout_exercises (обновленные данные)
+    # 3. Workout_exercises
     workout_exercises = [
-    
-    # Упражнения для ног (5)
-    WorkoutExercises(name_workout_exercises="Приседания", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Жим ногами", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Выпады", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Сгибание ног лежа", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для груди (3)
-    WorkoutExercises(name_workout_exercises="Жим лежа", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Жим гантелей на наклонной скамье", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Разведение гантелей", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Отжимания на брусьях", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для спины (4)
-    WorkoutExercises(name_workout_exercises="Становая тяга", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Подтягивания", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Тяга штанги в наклоне", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Тяга верхнего блока", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для плеч (6)
-    WorkoutExercises(name_workout_exercises="Армейский жим", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Махи гантелями в стороны", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Тяга штанги к подбородку", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для бицепса (1)
-    WorkoutExercises(name_workout_exercises="Подъем штанги на бицепс", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Подъем гантелей на бицепс", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Молотки", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для трицепса (2)
-    WorkoutExercises(name_workout_exercises="Французский жим", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Жим лежа узким хватом", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Разгибание на блоке", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для пресса (7)
-    WorkoutExercises(name_workout_exercises="Скручивания", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Подъем ног в висе", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Планка", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для икр (10)
-    WorkoutExercises(name_workout_exercises="Подъемы на носки стоя", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Подъемы на носки сидя", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для ягодиц (9)
-    WorkoutExercises(name_workout_exercises="Ягодичный мост", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Махи ногой назад", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
-    
-    # Упражнения для трапеций (8)
-    WorkoutExercises(name_workout_exercises="Шраги с гантелями", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
-    
-    WorkoutExercises(name_workout_exercises="Шраги со штангой", id_creation_user=1, 
-                    notice_workout_exercises=None, 
-                    id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
-    
-]
+        # Упражнения для ног (5)
+        WorkoutExercises(name_workout_exercises="Приседания", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Жим ногами", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Выпады", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Сгибание ног лежа", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=5, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для груди (3)
+        WorkoutExercises(name_workout_exercises="Жим лежа", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Жим гантелей на наклонной скамье", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Разведение гантелей", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Отжимания на брусьях", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=3, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для спины (4)
+        WorkoutExercises(name_workout_exercises="Становая тяга", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Подтягивания", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Тяга штанги в наклоне", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Тяга верхнего блока", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=4, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для плеч (6)
+        WorkoutExercises(name_workout_exercises="Армейский жим", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Махи гантелями в стороны", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Тяга штанги к подбородку", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=6, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для бицепса (1)
+        WorkoutExercises(name_workout_exercises="Подъем штанги на бицепс", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Подъем гантелей на бицепс", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Молотки", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=1, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для трицепса (2)
+        WorkoutExercises(name_workout_exercises="Французский жим", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Жим лежа узким хватом", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Разгибание на блоке", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=2, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для пресса (7)
+        WorkoutExercises(name_workout_exercises="Скручивания", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Подъем ног в висе", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Планка", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=7, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для икр (10)
+        WorkoutExercises(name_workout_exercises="Подъемы на носки стоя", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Подъемы на носки сидя", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=10, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для ягодиц (9)
+        WorkoutExercises(name_workout_exercises="Ягодичный мост", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Махи ногой назад", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=9, gif_file_workout_exercises=None, vision_user=True),
+        
+        # Упражнения для трапеций (8)
+        WorkoutExercises(name_workout_exercises="Шраги с гантелями", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
+        
+        WorkoutExercises(name_workout_exercises="Шраги со штангой", id_creation_user=1, 
+                        notice_workout_exercises=None, 
+                        id_muscle_category=8, gif_file_workout_exercises=None, vision_user=True),
+    ]
 
-    # Добавляем ID к упражнениям
-    for i, exercise in enumerate(workout_exercises, 1):
-        exercise.id_workout_exercises = i
-    
     session.add_all(workout_exercises)
     await session.flush()
     
     # 4. Programs_workout (по 2-3 программы на пользователя)
     programs_workout = [
         # Программы для пользователя 1001
-        ProgramsWorkout(id_programs_workout=1, name_programs_workout="Силовая тренировка груди", id_user=1001, week_day_programs_workout="Понедельник"),
-        ProgramsWorkout(id_programs_workout=2, name_programs_workout="Тренировка спины", id_user=1001, week_day_programs_workout="Среда"),
-        ProgramsWorkout(id_programs_workout=3, name_programs_workout="Тренировка ног", id_user=1001, week_day_programs_workout="Пятница"),
+        ProgramsWorkout(name_programs_workout="Силовая тренировка груди", id_user=1001, week_day_programs_workout="Понедельник"),
+        ProgramsWorkout(name_programs_workout="Тренировка спины", id_user=1001, week_day_programs_workout="Среда"),
+        ProgramsWorkout(name_programs_workout="Тренировка ног", id_user=1001, week_day_programs_workout="Пятница"),
         
         # Программы для пользователя 1002
-        ProgramsWorkout(id_programs_workout=4, name_programs_workout="Верх тела", id_user=1002, week_day_programs_workout="Понедельник"),
-        ProgramsWorkout(id_programs_workout=5, name_programs_workout="Низ тела", id_user=1002, week_day_programs_workout="Среда"),
-        ProgramsWorkout(id_programs_workout=6, name_programs_workout="Кардио", id_user=1002, week_day_programs_workout="Пятница"),
+        ProgramsWorkout(name_programs_workout="Верх тела", id_user=1002, week_day_programs_workout="Понедельник"),
+        ProgramsWorkout(name_programs_workout="Низ тела", id_user=1002, week_day_programs_workout="Среда"),
+        ProgramsWorkout(name_programs_workout="Кардио", id_user=1002, week_day_programs_workout="Пятница"),
         
         # Программы для пользователя 1003
-        ProgramsWorkout(id_programs_workout=7, name_programs_workout="Фуллбади", id_user=1003, week_day_programs_workout="Понедельник"),
-        ProgramsWorkout(id_programs_workout=8, name_programs_workout="Спина-бицепс", id_user=1003, week_day_programs_workout="Среда"),
+        ProgramsWorkout(name_programs_workout="Фуллбади", id_user=1003, week_day_programs_workout="Понедельник"),
+        ProgramsWorkout(name_programs_workout="Спина-бицепс", id_user=1003, week_day_programs_workout="Среда"),
     ]
     session.add_all(programs_workout)
     await session.flush()
     
     # 5. Workout_ex_pool (по 3 упражнения на программу)
     workout_ex_pool = []
-    ex_pool_id = 1
     
     # Программа 1 (Грудь) - 4 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=1, id_workout_exercises=5, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=50),  # Жим лежа
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=1, id_workout_exercises=6, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=20),  # Жим гантелей на наклонной
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=1, id_workout_exercises=7, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=4, weight_ex_pool=15),  # Разведение гантелей
-        WorkoutExPool(id_ex_pool=ex_pool_id+3, id_programs_workout=1, id_workout_exercises=8, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=8, approaches_target_ex_pool=3, weight_ex_pool=0),   # Отжимания на брусьях
+        WorkoutExPool(id_programs_workout=programs_workout[0].id_programs_workout, id_workout_exercises=workout_exercises[4].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=50),  # Жим лежа
+        WorkoutExPool(id_programs_workout=programs_workout[0].id_programs_workout, id_workout_exercises=workout_exercises[5].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=20),  # Жим гантелей на наклонной
+        WorkoutExPool(id_programs_workout=programs_workout[0].id_programs_workout, id_workout_exercises=workout_exercises[6].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=4, weight_ex_pool=15),  # Разведение гантелей
+        WorkoutExPool(id_programs_workout=programs_workout[0].id_programs_workout, id_workout_exercises=workout_exercises[7].id_workout_exercises, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=8, approaches_target_ex_pool=3, weight_ex_pool=0),   # Отжимания на брусьях
     ])
-    ex_pool_id += 4
     
     # Программа 2 (Спина) - 4 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=2, id_workout_exercises=9, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=40),  # Становая тяга
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=2, id_workout_exercises=10, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=6, approaches_target_ex_pool=3, weight_ex_pool=0),   # Подтягивания
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=2, id_workout_exercises=11, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=4, weight_ex_pool=25), # Тяга штанги в наклоне
-        WorkoutExPool(id_ex_pool=ex_pool_id+3, id_programs_workout=2, id_workout_exercises=12, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=35), # Тяга верхнего блока
+        WorkoutExPool(id_programs_workout=programs_workout[1].id_programs_workout, id_workout_exercises=workout_exercises[8].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=40),  # Становая тяга
+        WorkoutExPool(id_programs_workout=programs_workout[1].id_programs_workout, id_workout_exercises=workout_exercises[9].id_workout_exercises, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=6, approaches_target_ex_pool=3, weight_ex_pool=0),   # Подтягивания
+        WorkoutExPool(id_programs_workout=programs_workout[1].id_programs_workout, id_workout_exercises=workout_exercises[10].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=4, weight_ex_pool=25), # Тяга штанги в наклоне
+        WorkoutExPool(id_programs_workout=programs_workout[1].id_programs_workout, id_workout_exercises=workout_exercises[11].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=35), # Тяга верхнего блока
     ])
-    ex_pool_id += 4
     
     # Программа 3 (Ноги) - 4 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=3, id_workout_exercises=1, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=6, approaches_target_ex_pool=5, weight_ex_pool=80),   # Приседания
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=3, id_workout_exercises=2, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=100), # Жим ногами
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=3, id_workout_exercises=3, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=15),  # Выпады
-        WorkoutExPool(id_ex_pool=ex_pool_id+3, id_programs_workout=3, id_workout_exercises=4, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=25),  # Сгибание ног лежа
+        WorkoutExPool(id_programs_workout=programs_workout[2].id_programs_workout, id_workout_exercises=workout_exercises[0].id_workout_exercises, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=6, approaches_target_ex_pool=5, weight_ex_pool=80),   # Приседания
+        WorkoutExPool(id_programs_workout=programs_workout[2].id_programs_workout, id_workout_exercises=workout_exercises[1].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=100), # Жим ногами
+        WorkoutExPool(id_programs_workout=programs_workout[2].id_programs_workout, id_workout_exercises=workout_exercises[2].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=15),  # Выпады
+        WorkoutExPool(id_programs_workout=programs_workout[2].id_programs_workout, id_workout_exercises=workout_exercises[3].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=25),  # Сгибание ног лежа
     ])
-    ex_pool_id += 4
     
     # Программа 4 (Верх тела) - 3 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=4, id_workout_exercises=5, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=45),  # Жим лежа
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=4, id_workout_exercises=9, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=35), # Становая тяга
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=4, id_workout_exercises=13, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=18), # Армейский жим
+        WorkoutExPool(id_programs_workout=programs_workout[3].id_programs_workout, id_workout_exercises=workout_exercises[4].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=45),  # Жим лежа
+        WorkoutExPool(id_programs_workout=programs_workout[3].id_programs_workout, id_workout_exercises=workout_exercises[8].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=35), # Становая тяга
+        WorkoutExPool(id_programs_workout=programs_workout[3].id_programs_workout, id_workout_exercises=workout_exercises[12].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=18), # Армейский жим
     ])
-    ex_pool_id += 3
     
     # Программа 5 (Низ тела) - 3 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=5, id_workout_exercises=1, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=5, weight_ex_pool=70),   # Приседания
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=5, id_workout_exercises=2, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=90), # Жим ногами
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=5, id_workout_exercises=3, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=12),  # Выпады
+        WorkoutExPool(id_programs_workout=programs_workout[4].id_programs_workout, id_workout_exercises=workout_exercises[0].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=5, weight_ex_pool=70),   # Приседания
+        WorkoutExPool(id_programs_workout=programs_workout[4].id_programs_workout, id_workout_exercises=workout_exercises[1].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=90), # Жим ногами
+        WorkoutExPool(id_programs_workout=programs_workout[4].id_programs_workout, id_workout_exercises=workout_exercises[2].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=3, weight_ex_pool=12),  # Выпады
     ])
-    ex_pool_id += 3
     
     # Программа 6 (Кардио) - 3 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=6, id_workout_exercises=1, max_target_iteration_ex_pool=20, min_target_iteration_ex_pool=15, approaches_target_ex_pool=3, weight_ex_pool=50),   # Приседания
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=6, id_workout_exercises=3, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=10),  # Выпады
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=6, id_workout_exercises=22, max_target_iteration_ex_pool=20, min_target_iteration_ex_pool=15, approaches_target_ex_pool=3, weight_ex_pool=8),  # Подъемы на носки стоя
+        WorkoutExPool(id_programs_workout=programs_workout[5].id_programs_workout, id_workout_exercises=workout_exercises[0].id_workout_exercises, max_target_iteration_ex_pool=20, min_target_iteration_ex_pool=15, approaches_target_ex_pool=3, weight_ex_pool=50),   # Приседания
+        WorkoutExPool(id_programs_workout=programs_workout[5].id_programs_workout, id_workout_exercises=workout_exercises[2].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=4, weight_ex_pool=10),  # Выпады
+        WorkoutExPool(id_programs_workout=programs_workout[5].id_programs_workout, id_workout_exercises=workout_exercises[21].id_workout_exercises, max_target_iteration_ex_pool=20, min_target_iteration_ex_pool=15, approaches_target_ex_pool=3, weight_ex_pool=8),  # Подъемы на носки стоя
     ])
-    ex_pool_id += 3
     
     # Программа 7 (Фуллбади) - 3 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=7, id_workout_exercises=5, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=6, approaches_target_ex_pool=4, weight_ex_pool=55),  # Жим лежа
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=7, id_workout_exercises=9, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=3, weight_ex_pool=65),  # Становая тяга
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=7, id_workout_exercises=1, max_target_iteration_ex_pool=8, min_target_iteration_ex_pool=5, approaches_target_ex_pool=5, weight_ex_pool=85),   # Приседания
+        WorkoutExPool(id_programs_workout=programs_workout[6].id_programs_workout, id_workout_exercises=workout_exercises[4].id_workout_exercises, max_target_iteration_ex_pool=10, min_target_iteration_ex_pool=6, approaches_target_ex_pool=4, weight_ex_pool=55),  # Жим лежа
+        WorkoutExPool(id_programs_workout=programs_workout[6].id_programs_workout, id_workout_exercises=workout_exercises[8].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=3, weight_ex_pool=65),  # Становая тяга
+        WorkoutExPool(id_programs_workout=programs_workout[6].id_programs_workout, id_workout_exercises=workout_exercises[0].id_workout_exercises, max_target_iteration_ex_pool=8, min_target_iteration_ex_pool=5, approaches_target_ex_pool=5, weight_ex_pool=85),   # Приседания
     ])
-    ex_pool_id += 3
     
     # Программа 8 (Спина-бицепс) - 3 упражнения
     workout_ex_pool.extend([
-        WorkoutExPool(id_ex_pool=ex_pool_id, id_programs_workout=8, id_workout_exercises=11, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=4, weight_ex_pool=38), # Тяга штанги в наклоне
-        WorkoutExPool(id_ex_pool=ex_pool_id+1, id_programs_workout=8, id_workout_exercises=12, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=3, weight_ex_pool=22), # Тяга верхнего блока
-        WorkoutExPool(id_ex_pool=ex_pool_id+2, id_programs_workout=8, id_workout_exercises=16, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=30), # Подъем штанги на бицепс
+        WorkoutExPool(id_programs_workout=programs_workout[7].id_programs_workout, id_workout_exercises=workout_exercises[10].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=10, approaches_target_ex_pool=4, weight_ex_pool=38), # Тяга штанги в наклоне
+        WorkoutExPool(id_programs_workout=programs_workout[7].id_programs_workout, id_workout_exercises=workout_exercises[11].id_workout_exercises, max_target_iteration_ex_pool=15, min_target_iteration_ex_pool=12, approaches_target_ex_pool=3, weight_ex_pool=22), # Тяга верхнего блока
+        WorkoutExPool(id_programs_workout=programs_workout[7].id_programs_workout, id_workout_exercises=workout_exercises[15].id_workout_exercises, max_target_iteration_ex_pool=12, min_target_iteration_ex_pool=8, approaches_target_ex_pool=4, weight_ex_pool=30), # Подъем штанги на бицепс
     ])
     
     session.add_all(workout_ex_pool)
@@ -722,50 +708,42 @@ async def create_test_data(session: AsyncSession):
     
     # 6. Train_info (по 3-5 тренировок на пользователя)
     train_info = []
-    train_info_id = 1
     
     # Тренировки для пользователя 1001 (5 тренировок)
     for i in range(5):
         train_info.append(TrainInfo(
-            id_train_info=train_info_id,
             datetime_start_train_info=datetime.now() - timedelta(days=7-i),
             datetime_end_train_info=datetime.now() - timedelta(days=7-i, hours=1, minutes=30),
             check_train_info=True,
             Id_user=1001,
             name_programs_workout=["Силовая тренировка груди", "Тренировка спины", "Тренировка ног"][i % 3]
         ))
-        train_info_id += 1
     
     # Тренировки для пользователя 1002 (4 тренировки)
     for i in range(4):
         train_info.append(TrainInfo(
-            id_train_info=train_info_id,
             datetime_start_train_info=datetime.now() - timedelta(days=5-i),
             datetime_end_train_info=datetime.now() - timedelta(days=5-i, hours=1, minutes=15),
             check_train_info=True,
             Id_user=1002,
             name_programs_workout=["Верх тела", "Низ тела", "Кардио"][i % 3]
         ))
-        train_info_id += 1
     
     # Тренировки для пользователя 1003 (3 тренировки)
     for i in range(3):
         train_info.append(TrainInfo(
-            id_train_info=train_info_id,
             datetime_start_train_info=datetime.now() - timedelta(days=3-i),
             datetime_end_train_info=datetime.now() - timedelta(days=3-i, hours=1, minutes=45),
             check_train_info=True,
             Id_user=1003,
             name_programs_workout=["Фуллбади", "Спина-бицепс"][i % 2]
         ))
-        train_info_id += 1
     
     session.add_all(train_info)
     await session.flush()
     
     # 7. Train_pool (по 3-4 упражнения на тренировку)
     train_pool = []
-    train_pool_id = 1
     
     # Для каждой тренировки создаем по 3-4 упражнения
     for train in train_info:
@@ -781,22 +759,19 @@ async def create_test_data(session: AsyncSession):
         
         for ex in selected_exercises:
             train_pool.append(TrainPool(
-                id_train_pool=train_pool_id,
                 id_train_info=train.id_train_info,
-                record_bool=(train_pool_id % 3 == 0),  # Каждая третья запись - рекорд
+                record_bool=False,  # Упрощаем логику
                 id_workout_exercises=ex.id_workout_exercises
             ))
-            train_pool_id += 1
     
     session.add_all(train_pool)
     await session.flush()
     
     # 8. Approaches_rec (по 3-4 подхода на упражнение)
     approaches_rec = []
-    approach_id = 1
     
     for train_pool_item in train_pool:
-        num_approaches = 3 if approach_id % 2 == 0 else 4
+        num_approaches = 3 if len(approaches_rec) % 2 == 0 else 4
         
         for approach_num in range(num_approaches):
             # Получаем вес из workout_ex_pool для этого упражнения
@@ -807,24 +782,22 @@ async def create_test_data(session: AsyncSession):
             iterations = 8 + approach_num * 2  # Увеличиваем повторения с каждым подходом
             
             approaches_rec.append(ApproachesRec(
-                id_approaches_rec=approach_id,
                 weight_approaches_rec=weight,
                 rest_time_up_approaches_rec=datetime.now() - timedelta(minutes=(10 + approach_num)),
                 rest_time_down_approaches_rec=datetime.now() - timedelta(minutes=(9 + approach_num)),
                 num_iteration_approaches_rec=iterations,
                 id_train_pool=train_pool_item.id_train_pool
             ))
-            approach_id += 1
     
     session.add_all(approaches_rec)
     await session.flush()
     
     # 9. Restrictions (по 1-2 ограничения на пользователя)
     restrictions = [
-        Restrictions(id_restrictions=1, id_workout_exercises=1, id_user=1001),  # Иван - проблемы с приседаниями
-        Restrictions(id_restrictions=2, id_workout_exercises=5, id_user=1002),  # Мария - проблемы с жимом лежа
-        Restrictions(id_restrictions=3, id_workout_exercises=9, id_user=1002),  # Мария - проблемы со становой тягой
-        Restrictions(id_restrictions=4, id_workout_exercises=2, id_user=1003),  # Алексей - проблемы с жимом ногами
+        Restrictions(id_workout_exercises=workout_exercises[0].id_workout_exercises, id_user=1001),  # Иван - проблемы с приседаниями
+        Restrictions(id_workout_exercises=workout_exercises[4].id_workout_exercises, id_user=1002),  # Мария - проблемы с жимом лежа
+        Restrictions(id_workout_exercises=workout_exercises[8].id_workout_exercises, id_user=1002),  # Мария - проблемы со становой тягой
+        Restrictions(id_workout_exercises=workout_exercises[1].id_workout_exercises, id_user=1003),  # Алексей - проблемы с жимом ногами
     ]
     session.add_all(restrictions)
     
