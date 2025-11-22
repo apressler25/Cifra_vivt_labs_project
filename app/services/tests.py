@@ -769,7 +769,12 @@ async def create_test_data(session: AsyncSession):
             
             if ex_pool_item:
                 # Увеличиваем вес с каждой тренировкой
-                day_weight_increase = i * 5  # +5 кг с каждой следующей тренировкой
+                if i!=2 | i!=5:
+                    day_weight_increase = i * 5  # +5 кг с каждой следующей тренировкой
+                elif i ==2:
+                    day_weight_increase = i * 2+1
+                elif i ==5: 
+                    day_weight_increase = i * 6
                 base_weight = ex_pool_item.weight_ex_pool + day_weight_increase
                 base_iterations = ex_pool_item.min_target_iteration_ex_pool
                 
