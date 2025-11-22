@@ -4,7 +4,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from db.engine import get_async_session
 from sqlalchemy.future import select
 from models.models_bd import (User, TrainInfo)
-
+from services.all_service import delete_zero_iteration_approaches
 
 
 
@@ -12,25 +12,59 @@ from models.models_bd import (User, TrainInfo)
 userrouter = APIRouter(prefix="/users", tags=["ПОЛЬЗОВАТЕЛЬ"])
 
 
+from datetime import datetime, timedelta
+
 @userrouter.get("/{telegram_id}", name="Вход в систему", response_model=ResponseUserAuthorizeSchema)
 async def authorize_user(telegram_id: int, session: AsyncSession = Depends(get_async_session)):
+    # Определяем максимальное время от начала тренировки в часах
+    MAX_TRAIN_DURATION_HOURS = 3  
+    
     user = await session.scalar(select(User).where(User.id_telegram == telegram_id))
+    
     if user is not None:
         query = (
-            select(TrainInfo.id_train_info)
+            select(TrainInfo)
             .join(User, TrainInfo.Id_user == User.id_telegram)
             .where(
                 User.id_telegram == telegram_id,
-                TrainInfo.check_train_info == False
+                TrainInfo.check_train_info == False,
+                TrainInfo.datetime_end_train_info == None 
             )
         )        
-        train_user = await session.scalar(query)
-        if train_user is not None:
-            return ResponseUserAuthorizeSchema(
-                was_registered=True, 
-                check_train_info=train_user,
-                sub_user=user.sub_user
-            )
+        active_train = await session.scalar(query)
+        
+        # Если есть активная тренировка, проверяем ее длительность
+        if active_train is not None:
+            train_start_time = active_train.datetime_start_train_info
+            current_time = datetime.now()
+            train_duration = current_time - train_start_time
+            
+            # Если тренировка идет больше MAX_TRAIN_DURATION_HOURS часов
+            if train_duration > timedelta(hours=MAX_TRAIN_DURATION_HOURS):
+                # Завершаем тренировку
+                active_train.datetime_end_train_info = current_time
+                active_train.check_train_info = True
+                
+                # Выполняем очистку нулевых записей
+                await delete_zero_iteration_approaches(telegram_id, session)
+                
+                # Сохраняем изменения
+                await session.commit()
+                
+                return ResponseUserAuthorizeSchema(
+                    was_registered=True, 
+                    check_train_info=None,  # Тренировка завершена
+                    sub_user=user.sub_user
+                )
+            else:
+                # Тренировка активна и время в пределах нормы
+                return ResponseUserAuthorizeSchema(
+                    was_registered=True, 
+                    check_train_info=active_train.id_train_info,
+                    sub_user=user.sub_user
+                )
+        
+        # Если активной тренировки нет
         return ResponseUserAuthorizeSchema(
             was_registered=True, 
             check_train_info=None,

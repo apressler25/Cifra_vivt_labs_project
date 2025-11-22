@@ -460,10 +460,7 @@ async def get_user_features(
         user_query = select(User.info_restrictions_user).where(User.id_telegram == user_id)
         user_result = await session.execute(user_query)
         restrictions = user_result.scalar_one_or_none()
-        
-        if restrictions is None:
-            raise HTTPException(status_code=404, detail="Пользователь не найден")
-        
+    
         # Если ограничений нет, возвращаем пустую строку
         features_text = restrictions if restrictions else "Особенности не указаны"
         
