@@ -116,10 +116,10 @@ async def create_workout(
             # Создаем подходы в Approaches_rec
             for approach_num in range(workout_ex.approaches_target_ex_pool):
                 new_approach = ApproachesRec(
-                    weight_approaches_rec=0,
+                    weight_approaches_rec=workout_ex.weight_ex_pool,
                     rest_time_up_approaches_rec=None,
                     rest_time_down_approaches_rec=None,
-                    num_iteration_approaches_rec=0,
+                    num_iteration_approaches_rec=workout_ex.min_target_iteration_ex_pool,
                     id_train_pool=new_train_pool.id_train_pool,
                     record_bool=False
                 )
@@ -330,7 +330,7 @@ async def complete_workout(
                 status=False,
                 message="Тренировка уже завершена"
             )
-        delete_zero_iteration_approaches(train_info.Id_user, session)
+        
         
         # Устанавливаем check_train_info в True
         train_info.check_train_info = True
@@ -340,7 +340,7 @@ async def complete_workout(
         
         # Сохраняем изменения
         await session.commit()
-        
+        delete_zero_iteration_approaches(train_info.Id_user, session)
         return StatusResponse(
             status=True,
             message="Тренировка успешно завершена"
