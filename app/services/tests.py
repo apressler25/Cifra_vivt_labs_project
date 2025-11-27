@@ -715,10 +715,9 @@ async def create_test_data(session: AsyncSession):
     
     # Создаем 5 тренировок по одной программе в разные дни
     current_date = datetime.now()
-    
     for day in range(5):
         # Создаем дату тренировки (каждые 3 дня)
-        days_ago = 12 - day * 3  # 12, 9, 6, 3, 0 дней назад
+        days_ago = 13 - day * 3  # 12, 9, 6, 3, 0 дней назад
         train_date = current_date - timedelta(days=days_ago)
         
         # Устанавливаем разумное время тренировки

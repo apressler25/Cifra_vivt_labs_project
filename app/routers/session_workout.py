@@ -170,6 +170,8 @@ async def get_detailed_workout_info(
                 .selectinload(WorkoutExercises.muscle_category)
             )
             .where(TrainInfo.id_train_info == train_info_id)
+            
+            
         )
         
         result = await session.execute(stmt)
@@ -195,7 +197,9 @@ async def get_detailed_workout_info(
                     set_id=approach.id_approaches_rec
                 )
                 completed_sets.append(approach_data)
-            
+                
+            # completed_sets.sort(key= lambda x,y: return x)
+            completed_sets.sort(key=lambda x: x.set_id)
             # Получаем информацию о мышечной группе
             muscle_category = train_pool.workout_exercise.muscle_category
             
