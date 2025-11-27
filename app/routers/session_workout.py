@@ -344,7 +344,7 @@ async def complete_workout(
         
         # Сохраняем изменения
         await session.commit()
-        delete_zero_iteration_approaches(train_info.Id_user, session)
+        await delete_zero_iteration_approaches(train_info.Id_user, session)
         return StatusResponse(
             status=True,
             message="Тренировка успешно завершена"
